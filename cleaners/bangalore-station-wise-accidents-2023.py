@@ -44,12 +44,22 @@ pr_df = pd.read_parquet(
 
 # getting sub-divisions totals
 zone_na_rows = pr_df["zone"].isna()
-division_total = pr_df[zone_na_rows].drop(columns=["zone", "station"])
+division_total = (
+    pr_df[zone_na_rows].drop(columns=["zone", "station"]).reset_index(drop=True)
+)
+print(division_total, "\n")
 
 # getting zone totals
 division_na_rows = pr_df["division"].isna()
-zone_total = pr_df[division_na_rows].drop(columns=["division", "station"])
+zone_total = (
+    pr_df[division_na_rows].drop(columns=["division", "station"]).reset_index(drop=True)
+)
+print(zone_total, "\n")
 
 # getting pie chart data
 pie_chart_data = pr_df[~zone_na_rows & ~division_na_rows].reset_index(drop=True)
-print(pie_chart_data)
+print(pie_chart_data, "\n")
+
+# pd.read_parquet(
+#     "https://github.com/anbarasanv/datasets/raw/main/parquet/bangalore-station-wise-accidents-2023.parquet"
+# )
